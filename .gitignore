@@ -1,0 +1,24 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# ChromaDB
+chroma_db/
+
+# Environment Variables
+.env
+
+# Logs
+*.log
