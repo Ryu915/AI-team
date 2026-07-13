@@ -16,3 +16,6 @@ class State(TypedDict):
 
     approved: bool # for human approval
     review_status: str # same
+
+    # planner
+    plan: list[str]

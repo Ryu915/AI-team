@@ -1,6 +1,7 @@
 from loader.loader import ProjectLoader
 from agents.understanding import UnderstandingAgent
 from agents.router import router_node
+from agents.planner import planner_node
 from models.llm import get_llm
 from state import State
 
@@ -43,6 +44,15 @@ while True:
 
     print(f"\nRoute: {state['next_agent']}")
     print(f"Router: {state['router_response']}")
+    print(f"Touer: {state['chat_history']}")
+
+    if state["next_agent"] == "planner":
+
+        state = planner_node(state)
+
+        print("\n========== PLAN ==========\n")
+        print(state["plan"])
+
 
     if state["next_agent"] == "end":
         break
