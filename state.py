@@ -14,8 +14,15 @@ class State(TypedDict):
     router_response: str
     chat_history: list[AnyMessage]
 
-    approved: bool # for human approval
-    review_status: str # same
-
     # planner
     plan: list[str]
+
+    # human approval
+    approved: bool 
+    human_feedback: str 
+
+    # retriever
+    retrieved_context: list[str]
+
+    # coder
+    code_output: list[str]
