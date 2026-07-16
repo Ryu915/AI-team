@@ -38,6 +38,9 @@ Implementation Plan:
 Retrieved Context:
 {retrieved_context}
 
+Feedback:
+{feedback}
+
 Generate the required code changes.
 """
         )

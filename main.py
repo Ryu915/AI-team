@@ -34,7 +34,9 @@ state: State = {
     "user_input": "",
     "next_agent": "",
     "router_response": "",
-    "chat_history": []
+    "chat_history": [],
+    "reflection": None,
+    "reflection_iteration": 0
 }
 
     # Run the agent
@@ -47,6 +49,7 @@ print(state["project_understanding"])
 while True:
 
     state["user_input"] = input("\nYou: ")
+    state["iteration"] = 0
 
     # this is the main graph
     state = graph.invoke(state)

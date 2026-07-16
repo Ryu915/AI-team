@@ -1,6 +1,7 @@
 from typing import TypedDict
 from langchain_core.messages import AnyMessage
 from schemas.project import ProjectUnderstanding
+from models.reflection_output import ReflectionOutput
 
 
 
@@ -26,3 +27,7 @@ class State(TypedDict):
 
     # coder
     code_output: list[str]
+
+    # reflection
+    reflection: ReflectionOutput | None
+    reflection_iteration: int
