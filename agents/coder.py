@@ -33,6 +33,6 @@ def coder_node(state):
     state["reflection_iteration"] += 1
 
     print("\n===========Coder=============" )
-    print(f"\n{state["code_output"]}")
+    print(f"\n{state["code_output"].explanation}")
 
     return state

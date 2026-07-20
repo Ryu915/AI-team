@@ -7,6 +7,7 @@ from human import human_approval_node
 from agents.retriever import RetrieverAgent
 from agents.coder import coder_node
 from agents.reflection import reflection_node
+from agents.apply import apply_node
 
 def build_graph(understanding_agent, retriever_agent):
 
@@ -27,6 +28,7 @@ def build_graph(understanding_agent, retriever_agent):
     graph.add_node("retriever", retriever_node)
     graph.add_node("coder", coder_node)
     graph.add_node("reflection", reflection_node)
+    graph.add_node("apply", apply_node)
 
     # add edges
     graph.add_edge(START, "understanding")
@@ -34,6 +36,7 @@ def build_graph(understanding_agent, retriever_agent):
     graph.add_edge("planner", "human")
     graph.add_edge("retriever", "coder")
     graph.add_edge("coder", "reflection")
+    graph.add_edge("apply", END)
 
     # add conditional edges
     graph.add_conditional_edges(
@@ -55,11 +58,21 @@ def build_graph(understanding_agent, retriever_agent):
     )
 
     def reflection_router(state: State):
+
+        print("\n===== Reflection Router =====")
+        print("Approved:", state["reflection"].approved)
+        print("Reflection Iteration:", state["reflection_iteration"])
+
+
         if state["reflection"].approved:
+            print("Routing -> apply")
             return "approved"
         
         if state["reflection_iteration"] >= 3:
+            print("Routing -> end")
             return "max_attempts"
+        
+        print("Routing -> retry")
         
         return "retry"
 
@@ -67,7 +80,7 @@ def build_graph(understanding_agent, retriever_agent):
         "reflection",
         reflection_router,
         {
-            "approved" : END,
+            "approved" : "apply",
             "retry": "coder",
             "max_attempts" : END
         }

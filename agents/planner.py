@@ -8,6 +8,7 @@ llm = get_llm()
 planner = llm.with_structured_output(PlanOutput)
 
 def planner_node(state):
+    print(f"\n============Planner============")
 
     understanding = state["project_understanding"]
 

@@ -9,7 +9,7 @@ from state import State
 from graph import build_graph
 
 loader = ProjectLoader()
-vector_store = loader.load("/Users/ishaan915/Me/projects/logo-processor")
+vector_store = loader.load("/Users/ishaan915/Me/projects/crypto")
 
     # Create the LLM
 llm = get_llm()
@@ -28,7 +28,7 @@ graph = build_graph(understanding_agent, retriever_agent)
 
     # Initial state
 state: State = {
-    "project_path": "/Users/ishaan915/Me/projects/logo-processor",
+    "project_path": "/Users/ishaan915/Me/projects/crypto",
     "project_understanding": None,
 
     "user_input": "",
@@ -49,12 +49,10 @@ print(state["project_understanding"])
 while True:
 
     state["user_input"] = input("\nYou: ")
-    state["iteration"] = 0
+    state["reflection_iteration"] = 0
 
     # this is the main graph
     state = graph.invoke(state)
-    print(state["next_agent"])
-    print(state["router_response"])
 
     # till here
 

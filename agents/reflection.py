@@ -9,11 +9,12 @@ reflection = llm.with_structured_output(ReflectionOutput)
 
 def reflection_node(state):
 
+    print(f"\n============Reflection==========")
     understanding = state["project_understanding"]
     plan = state["plan"]
     code_output = state["code_output"]
     retrieved_context = state["retrieved_context"]
-
+ 
     result = reflection.invoke(
         reflection_prompt.format_messages(
             project_summary = understanding.summary,
@@ -24,5 +25,10 @@ def reflection_node(state):
     )
 
     state["reflection"] = result
+
+    print("\nReflection Result:")
+    print(state["reflection"])
+    print("Approved:", state["reflection"].approved)
+    print(state["reflection"].feedback)
 
     return state
