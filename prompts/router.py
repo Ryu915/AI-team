@@ -16,18 +16,24 @@ Do NOT write code.
 
 Possible routes:
 
-loader
+
 planner
-chatbot
-retriever
+project_qa
 none
 end
 
 Rules:
 
-- If the user provides a project path -> loader
+- The user is making casual conversation -> end
+- Examples:
+  - Hi
+  - Hello
+  - Thanks
+  - Goodbye
+  - Who are you?
+  - What can you do?
 
-- If they ask how the project works -> retriever
+- If they only ask how the project works or project related questions -> project_qa
 
 - If they request a feature or bug fix -> planner
 

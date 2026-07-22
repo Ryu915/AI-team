@@ -14,6 +14,8 @@ def router_node(state):
         if state["project_understanding"] is not None
         else "No project loaded."
     )
+
+    state["project_qa_response"] = ""
     
     result = router.invoke(
         router_prompt.format_messages(
@@ -31,8 +33,12 @@ def router_node(state):
         HumanMessage(content=state["user_input"])
     )
 
-    state["chat_history"].append(
-        AIMessage(content=result.message)
-    )
 
+    if result.next_agent == "none" or result.next_agent == "END":
+        state["chat_history"].append(
+            AIMessage(content=result.message)
+        )
+
+    print(f"\nNext agent: {result.next_agent}")
+    
     return state

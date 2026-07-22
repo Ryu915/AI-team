@@ -8,7 +8,7 @@ class RouterOutput(BaseModel):
     next_agent: Literal[
         "planner",
         "retriever",
-
+        "project_qa",
         "end"
     ]
 

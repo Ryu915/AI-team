@@ -118,21 +118,23 @@ class ProjectLoader:
         print(path)
 
         self.vector_store = VectorStore(path.name)
-
+        print("\nScanning project...")
         files = self._scan_project(path)
         
+        print("\nReading files...")
         documents = self._read_files(files)
-        print(f"Found {len(documents)} documents")
+        print(f"\nFound {len(documents)} documents")
         
-
+        print("\nChunking documents...")
         chunks = self._chunk_documents(documents)
 
+        print("\nEmbedding chunks...")
         embedded_chunks = self._embed_chunks(chunks)
 
-       
+        print("\nStoring embeddings...")
         self._store_embeddings(embedded_chunks)
         #print(self.vector_store.count())
-
+        print("\nProject loaded successfully.")
         return self.vector_store
         
     

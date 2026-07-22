@@ -11,12 +11,14 @@ class UnderstandingAgent:
         self.structured_llm = self.llm.with_structured_output(ProjectUnderstanding)
 
     def run(self, state):
+        print("\nUnderstanding project...")
         context = self._retrieve_context()
 
         understanding = self._invoke_llm(context)
 
         state["project_understanding"] = understanding
 
+        print("\nProject understood successfully.")
         return state
     
     def _retrieve_context(self):

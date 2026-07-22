@@ -21,11 +21,8 @@ class VectorStore:
 
     def add(self, embedded_chunks):
         ids = []
-
         documents = []
-
         embeddings = []
-
         metadatas = []
 
         for embedded in embedded_chunks:
@@ -35,30 +32,18 @@ class VectorStore:
             embeddings.append(embedded.embedding)
 
             metadatas.append({
-
-                "file_path": str(
-                    embedded.chunk.file_path
-                ),
-
+                "file_path": str(embedded.chunk.file_path),
                 "file_name": embedded.chunk.file_name,
-
                 "language": embedded.chunk.language,
-
                 "chunk_index": embedded.chunk.chunk_index
-
             })
 
-            self.collection.add(
-
-                ids=ids,
-
-                documents=documents,
-
-                embeddings=embeddings,
-
-                metadatas=metadatas
-
-            )
+        self.collection.add(
+            ids=ids,
+            documents=documents,
+            embeddings=embeddings,
+            metadatas=metadatas
+        )
 
     def search(self, query: str, k: int = 5) -> str:
         """

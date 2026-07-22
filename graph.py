@@ -4,24 +4,24 @@ from state import State
 from agents.router import router_node
 from agents.planner import planner_node
 from human import human_approval_node
-from agents.retriever import RetrieverAgent
 from agents.coder import coder_node
 from agents.reflection import reflection_node
 from agents.apply import apply_node
+from agents.project_qa import ProjectQA
 
-def build_graph(understanding_agent, retriever_agent):
-
-    def understanding_node(state: State):
-        return understanding_agent.run(state)
+def build_graph(llm, vector_store, retriever_agent):
     
     def retriever_node(state: State):
         return retriever_agent.run(state)
+    
+    def project_qa_node(state: State):
+        project_qa = ProjectQA(llm, vector_store)
+        return project_qa.run(state)
     
     # create graph
     graph = StateGraph(State)
 
     # add nodes
-    graph.add_node("understanding", understanding_node)
     graph.add_node("router", router_node)
     graph.add_node("planner", planner_node)
     graph.add_node("human", human_approval_node)
@@ -29,14 +29,15 @@ def build_graph(understanding_agent, retriever_agent):
     graph.add_node("coder", coder_node)
     graph.add_node("reflection", reflection_node)
     graph.add_node("apply", apply_node)
+    graph.add_node("project_qa", project_qa_node)
 
     # add edges
-    graph.add_edge(START, "understanding")
-    graph.add_edge("understanding", "router")
+    graph.add_edge(START, "router")
     graph.add_edge("planner", "human")
     graph.add_edge("retriever", "coder")
     graph.add_edge("coder", "reflection")
     graph.add_edge("apply", END)
+    graph.add_edge("project_qa", END)
 
     # add conditional edges
     graph.add_conditional_edges(
@@ -44,6 +45,7 @@ def build_graph(understanding_agent, retriever_agent):
         lambda state: state["next_agent"],
         {
             "planner": "planner",
+            "project_qa": "project_qa",
             "end": END
         }
     )
